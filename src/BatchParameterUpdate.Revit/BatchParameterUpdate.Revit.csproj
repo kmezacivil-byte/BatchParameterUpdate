@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>BatchParameterUpdate.Revit</RootNamespace>
+    <AssemblyName>BatchParameterUpdate</AssemblyName>
+    <UseWPF>true</UseWPF>
+
+    <!--
+      Required for Revit 2025 (.NET 8): emits the .deps.json that Revit needs to
+      load the add-in into its own AssemblyLoadContext, isolating our
+      dependencies from those of other add-ins loaded in the same session.
+    -->
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      The Revit API is referenced through NuGet instead of a hard-coded path to
+      "C:\Program Files\Autodesk\Revit 2025\". This lets a reviewer clone and
+      build the repository on a machine without Revit installed.
+
+      ExcludeAssets="runtime" keeps RevitAPI.dll out of the output folder: Revit
+      already has it loaded, and shipping a second copy is a known cause of
+      type-identity failures at run time.
+    -->
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+    <!-- AdWindows exposes ComponentManager.ApplicationWindow, used to make the
+         WPF dialog modal to the Revit main window. -->
+    <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(RevitApiPackageVersion)" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BatchParameterUpdate.Core\BatchParameterUpdate.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BatchParameterUpdate.addin" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    Developer convenience only: deploys to the per-user add-ins folder after a
+    Debug build so Revit picks up the add-in without running the installer.
+    End users install through the Inno Setup installer (see /installer).
+  -->
+  <Target Name="DeployToRevit" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+    <PropertyGroup>
+      <RevitAddinsDir>$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)</RevitAddinsDir>
+      <RevitAddinContentDir>$(RevitAddinsDir)\BatchParameterUpdate</RevitAddinContentDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <DeployFiles Include="$(TargetPath)" />
+      <DeployFiles Include="$(TargetDir)$(AssemblyName).deps.json" />
+      <DeployFiles Include="$(TargetDir)BatchParameterUpdate.Core.dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(RevitAddinContentDir)" />
+    <Copy SourceFiles="$(TargetDir)BatchParameterUpdate.addin" DestinationFolder="$(RevitAddinsDir)" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(RevitAddinContentDir)" />
+  </Target>
+
+</Project>

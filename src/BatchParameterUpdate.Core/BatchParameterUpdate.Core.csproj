@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Pure domain layer.
+    Deliberately has NO reference to the Revit API and no reference to WPF, so
+    the classification rules, the result aggregation and the summary formatting
+    can be covered by unit tests without a Revit host.
+  -->
+  <PropertyGroup>
+    <RootNamespace>BatchParameterUpdate.Core</RootNamespace>
+    <AssemblyName>BatchParameterUpdate.Core</AssemblyName>
+  </PropertyGroup>
+
+</Project>

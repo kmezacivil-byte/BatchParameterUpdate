@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+
+  <!--
+    Application entry point: builds the ribbon panel on Revit startup.
+    The Assembly path is relative to the folder containing this manifest,
+    which is why the installer places the binaries in a subfolder named
+    "BatchParameterUpdate" next to the .addin file.
+  -->
+  <AddIn Type="Application">
+    <Name>Batch Parameter Update</Name>
+    <Assembly>BatchParameterUpdate\BatchParameterUpdate.dll</Assembly>
+    <FullClassName>BatchParameterUpdate.Revit.App</FullClassName>
+    <!-- Fixed GUID: generated once for this add-in and never changed. -->
+    <AddInId>d1a708b8-4640-4fdd-82ea-3c028eb4629b</AddInId>
+    <VendorId>KMM</VendorId>
+    <VendorDescription>Kevin Meza</VendorDescription>
+  </AddIn>
+
+  <!--
+    The command is also registered directly so it remains reachable from
+    Add-Ins > External Tools if the ribbon fails to build for any reason.
+  -->
+  <AddIn Type="Command">
+    <Name>Batch Parameter Update</Name>
+    <Text>Batch Parameter Update</Text>
+    <Description>Updates a text instance parameter on the currently selected elements.</Description>
+    <Assembly>BatchParameterUpdate\BatchParameterUpdate.dll</Assembly>
+    <FullClassName>BatchParameterUpdate.Revit.Commands.BatchParameterUpdateCommand</FullClassName>
+    <AddInId>7c4f0f2e-9b3a-4a51-9c2e-1f5b6d8a44c1</AddInId>
+    <VendorId>KMM</VendorId>
+    <VendorDescription>Kevin Meza</VendorDescription>
+  </AddIn>
+
+</RevitAddIns>
