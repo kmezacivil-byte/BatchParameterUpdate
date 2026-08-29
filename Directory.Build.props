@@ -1,0 +1,31 @@
+<Project>
+
+  <!--
+    Single source of truth for the targeted Revit version.
+    Revit 2025 runs on .NET 8 and is the ONLY version this repository
+    has been built and tested against. See README.md > Supported versions.
+
+    To retarget another Revit version, change RevitVersion and TargetFramework
+    (Revit 2024 and earlier require net48). This has NOT been validated.
+  -->
+  <PropertyGroup>
+    <RevitVersion>2025</RevitVersion>
+    <RevitApiPackageVersion>2025.*</RevitApiPackageVersion>
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <Company>Kevin Meza</Company>
+    <Product>Batch Parameter Update</Product>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+</Project>
