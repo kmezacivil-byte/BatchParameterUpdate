@@ -8,6 +8,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BatchParameterUpdate.Core",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BatchParameterUpdate.Revit", "src\BatchParameterUpdate.Revit\BatchParameterUpdate.Revit.csproj", "{1B5C426C-4C45-45CB-ADA8-AC1F3197FC30}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F5CB98BE-B4DA-4FA7-B04C-D3DAB3F3EC0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BatchParameterUpdate.Tests", "tests\BatchParameterUpdate.Tests\BatchParameterUpdate.Tests.csproj", "{C5848EB6-7374-4490-BCFB-9742E0F761D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -22,9 +26,14 @@ Global
 		{1B5C426C-4C45-45CB-ADA8-AC1F3197FC30}.Debug|x64.Build.0 = Debug|x64
 		{1B5C426C-4C45-45CB-ADA8-AC1F3197FC30}.Release|x64.ActiveCfg = Release|x64
 		{1B5C426C-4C45-45CB-ADA8-AC1F3197FC30}.Release|x64.Build.0 = Release|x64
+		{C5848EB6-7374-4490-BCFB-9742E0F761D5}.Debug|x64.ActiveCfg = Debug|x64
+		{C5848EB6-7374-4490-BCFB-9742E0F761D5}.Debug|x64.Build.0 = Debug|x64
+		{C5848EB6-7374-4490-BCFB-9742E0F761D5}.Release|x64.ActiveCfg = Release|x64
+		{C5848EB6-7374-4490-BCFB-9742E0F761D5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{93D1945D-4995-4914-8401-DA4639CBEC5A} = {F3F7946A-6F59-4D03-AC6D-410DF8187D68}
 		{1B5C426C-4C45-45CB-ADA8-AC1F3197FC30} = {F3F7946A-6F59-4D03-AC6D-410DF8187D68}
+		{C5848EB6-7374-4490-BCFB-9742E0F761D5} = {F5CB98BE-B4DA-4FA7-B04C-D3DAB3F3EC0E}
 	EndGlobalSection
 EndGlobal
