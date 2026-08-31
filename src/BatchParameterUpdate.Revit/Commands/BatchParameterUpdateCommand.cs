@@ -1,20 +1,23 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using BatchParameterUpdate.Revit.Services;
+using BatchParameterUpdate.Revit.UI;
 
 namespace BatchParameterUpdate.Revit.Commands;
 
 /// <summary>
-/// Entry point of the batch update. This class is intentionally thin: it
-/// validates preconditions, collects user input and delegates the actual work.
-/// No parameter logic lives here.
+/// Entry point of the batch update. Stays thin on purpose: it validates
+/// preconditions, collects input via the dialog, and delegates the actual
+/// work to BatchParameterUpdateService. No parameter logic lives here.
 /// </summary>
 [Transaction(TransactionMode.Manual)]
 public sealed class BatchParameterUpdateCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        var uiDocument = commandData.Application.ActiveUIDocument;
+        var uiApplication = commandData.Application;
+        var uiDocument = uiApplication.ActiveUIDocument;
 
         if (uiDocument?.Document is null)
         {
@@ -24,9 +27,9 @@ public sealed class BatchParameterUpdateCommand : IExternalCommand
 
         var document = uiDocument.Document;
 
-        // The selection is captured as the very first action, before any dialog
-        // is shown, so the operation acts exactly on what was selected when the
-        // command started.
+        // The selection is captured as the very first action, before any
+        // dialog is shown, so the operation acts exactly on what was
+        // selected when the command started.
         var selectedIds = uiDocument.Selection.GetElementIds().ToList();
 
         if (document.IsFamilyDocument)
@@ -50,11 +53,18 @@ public sealed class BatchParameterUpdateCommand : IExternalCommand
             return Result.Cancelled;
         }
 
-        // --- Scaffold milestone ---------------------------------------------
-        // Next commits: input dialog (UI), parameter resolution (Core),
-        // transactional update and result summary.
-        TaskDialog.Show("Batch Parameter Update",
-            $"Add-in loaded successfully.\n\nElements captured in the selection: {selectedIds.Count}");
+        var dialog = new ParameterInputDialog(uiApplication.MainWindowHandle);
+        var dialogAccepted = dialog.ShowDialog();
+
+        // dialogAccepted is null if the window was closed without setting
+        // DialogResult at all (e.g. Alt+F4); Result stays null in that case
+        // too, so both paths are covered by this one check.
+        if (dialogAccepted != true || dialog.Result is not { } request)
+            return Result.Cancelled;
+
+        var result = BatchParameterUpdateService.Run(document, selectedIds, request);
+
+        TaskDialog.Show("Batch Parameter Update", result.BuildSummary());
 
         return Result.Succeeded;
     }
