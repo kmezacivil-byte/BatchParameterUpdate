@@ -46,17 +46,18 @@ Runs the unit test suite for `BatchParameterUpdate.Core` (11 test cases across
 
 ## Install
 
-1. Build in `Release` configuration first (see *Build*).
-2. Open `installer/BatchParameterUpdate.iss` with Inno Setup and compile it,
-   or run the pre-built installer if one is provided alongside this
-   repository.
-3. Run `installer/Output/BatchParameterUpdate-Setup-1.0.0.exe`.
+1. Download the installer from the
+   [v1.0.0 Release](https://github.com/kmezacivil-byte/BatchParameterUpdate/releases/tag/v1.0.0),
+   or build it yourself: build in `Release` configuration first (see *Build*),
+   then open `installer/BatchParameterUpdate.iss` with Inno Setup and compile
+   it.
+2. Run `BatchParameterUpdate-Setup-1.0.0.exe`.
    - Installs per-user, no administrator privileges required.
    - Close Revit before installing; the installer blocks if `Revit.exe` is
      detected running, since the add-in files would otherwise be locked.
    - If Revit 2025 is not found at its default install path, the installer
      warns but allows continuing (see *Assumptions & limitations*).
-4. Uninstall from Windows Settings → Apps, same as any other application.
+3. Uninstall from Windows Settings → Apps, same as any other application.
 
 The installer and the add-in DLL are **not code-signed**. On first launch
 after installing, Revit will show an "Unsigned add-in" security prompt -
