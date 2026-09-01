@@ -11,6 +11,7 @@
 
 #define AppVersion "1.0.0"
 #define RevitVersion "2025"
+#define RevitProductFolder "Revit " + RevitVersion
 #define RevitDisplayName "Autodesk Revit " + RevitVersion
 #define SourceDir "..\src\BatchParameterUpdate.Revit\bin\x64\Release\net8.0-windows"
 
@@ -47,8 +48,8 @@ Type: filesandordirs; Name: "{app}"
 [Code]
 function IsRevitInstalled(): Boolean;
 begin
-  Result := DirExists(ExpandConstant('{commonpf64}\Autodesk\{#RevitDisplayName}'))
-    or DirExists(ExpandConstant('{commonpf}\Autodesk\{#RevitDisplayName}'));
+  Result := DirExists(ExpandConstant('{commonpf64}\Autodesk\{#RevitProductFolder}'))
+    or DirExists(ExpandConstant('{commonpf}\Autodesk\{#RevitProductFolder}'));
 end;
 
 function IsProcessRunning(const ExeName: string): Boolean;

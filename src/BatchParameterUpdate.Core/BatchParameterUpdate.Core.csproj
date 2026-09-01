@@ -9,6 +9,7 @@
   <PropertyGroup>
     <RootNamespace>BatchParameterUpdate.Core</RootNamespace>
     <AssemblyName>BatchParameterUpdate.Core</AssemblyName>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
 </Project>
